@@ -5,6 +5,8 @@ description = "A library for interacting with the Notia.ai platform"
 keywords = ["machine learning", "datasets"]
 authors = ["Notia.ai"]
 readme = "README.md"
+homepage = "https://notia.ai"
+repository = "https://github.com/notia-ai/client"
 
 [tool.poetry.dependencies]
 python = "^3.8"
