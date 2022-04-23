@@ -1,5 +1,5 @@
 <div align="center">
-<img src="./resources/imgs/notia-dark-bg.png" width=60%/><br/>  
+<img src="https://raw.githubusercontent.com/notia-ai/client/master/resources/imgs/notia-gh-logo.png" width=60%/><br/>  
 </div>
 <p align="center">
 <a href="https://pypi.org/project/notia/">
