@@ -8,7 +8,7 @@ from typing import List, Optional
 class Display:
     def __init__(self) -> None:
         self._console = Console()
-    
+
     def log(self, msg_obj=None) -> None:
         self._console.print(msg_obj, style="bold green")
 
@@ -17,7 +17,7 @@ class Display:
 
     def error(self, msg_obj=None) -> None:
         self._console.print(msg_obj, style="bold red")
-    
+
     def log_styled(self, msg_obj=None, style: Optional[str] = None) -> None:
         self._console.print(msg_obj, style=style)
 

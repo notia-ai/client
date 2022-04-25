@@ -49,7 +49,6 @@ class API:
                 )
             )
             raise
-    
 
     def GetPresigned(self, slug: str) -> Optional[str]:
         request_url = self._api_url + "/api/datasets/presign"
