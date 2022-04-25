@@ -211,5 +211,10 @@ def load_dataset(slug: str, split: Optional[str] = None, load: Optional[bool] = 
     else:
         datasets = []
         for file in os.listdir(local_path):
-            datasets.append(_handle_split(local_path, file))
-        return tuple(datasets)
+            # we pass the local path and the file stem so we can match on ext
+            datasets.append(_handle_split(local_path, Path(file).stem))
+        if len(datasets) == 1:
+            # no need to tuple if single elem
+            return datasets[0]
+        else:
+            return tuple(datasets)

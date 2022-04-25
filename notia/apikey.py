@@ -60,9 +60,9 @@ def prompt_api_key(web_url: str, api_url: str):
             f"You can find your API key :key: in your browser"
             f" [blue underline][link={web_url}/authorize]here[/link][/blue underline] "
         ),
-        box=box.DOUBLE_EDGE,
+        box=box.ROUNDED,
     )
-    display.warning(api_prompt)
+    display.log_styled(api_prompt, style="yellow")
     display.log(
         "Paste the API key from your profile and hit enter, or press ctrl+c to quit: "
     )

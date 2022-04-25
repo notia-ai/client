@@ -1,13 +1,14 @@
 from notia.models import DatasetMeta
 from rich.console import Console
 from rich.table import Table
-from typing import List
+from rich import box
+from typing import List, Optional
 
 
 class Display:
     def __init__(self) -> None:
         self._console = Console()
-
+    
     def log(self, msg_obj=None) -> None:
         self._console.print(msg_obj, style="bold green")
 
@@ -16,9 +17,12 @@ class Display:
 
     def error(self, msg_obj=None) -> None:
         self._console.print(msg_obj, style="bold red")
+    
+    def log_styled(self, msg_obj=None, style: Optional[str] = None) -> None:
+        self._console.print(msg_obj, style=style)
 
     def datasetsAsTable(self, datasets: List[DatasetMeta]) -> None:
-        table = Table(show_header=True, header_style="bold green")
+        table = Table(show_header=True, expand=True, box=box.ROUNDED)
         table.add_column("ID")
         table.add_column("Name")
         table.add_column("Size", justify="right")
