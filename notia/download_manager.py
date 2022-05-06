@@ -10,23 +10,22 @@ import pandas as pd
 from rich.progress import track
 import tempfile
 from functools import partial
-from zipfile import ZIP_DEFLATED, BadZipfile, ZipFile
+from zipfile import BadZipfile, ZipFile
 import shutil
 import json
 from .config import NOTIA_CACHE, Api, EXTRACTED_DATASETS_DIR, DOWNLOADED_DATASETS_DIR
 
 
 class DownloadManager:
-    """A class for managing caching & downloads from Notia.ai
-    """
+    """A class for managing caching & downloads from Notia.ai"""
 
     def __init__(self) -> None:
         self._display = Display()
-        #cache_dir ~/.cache/notia/datasets 
+        # cache_dir ~/.cache/notia/datasets
         self.cache_dir = NOTIA_CACHE
-        #downloads_dir ~/.cache/notia/datasets/downloads 
+        # downloads_dir ~/.cache/notia/datasets/downloads
         self.downloads_dir = os.path.join(self.cache_dir, DOWNLOADED_DATASETS_DIR)
-        #extract_dir ~/.cache/notia/datasets/extracted
+        # extract_dir ~/.cache/notia/datasets/extracted
         self.extract_dir = os.path.join(self.cache_dir, EXTRACTED_DATASETS_DIR)
 
     def get_from_cache(self, slug: str, force_download=False):
@@ -59,11 +58,11 @@ class DownloadManager:
             # propagate upwards
             raise
 
-        #extract the file from the download dir to the extract dir
+        # extract the file from the download dir to the extract dir
         self.extract(
             os.path.join(self.downloads_dir, slug), os.path.join(self.extract_dir, slug)
         )
-        
+
         shutil.move(os.path.join(self.extract_dir, slug), cache_path)
         os.remove(os.path.join(self.downloads_dir, slug))
         return cache_path
@@ -196,7 +195,7 @@ def _handle_split(local_path: str, ext: str, split: str):
     else:
         raise ValueError(
             (
-                f"Load was true but {ext} was provided. Notia can automatically " 
+                f"Load was true but {ext} was provided. Notia can automatically "
                 "load CSV, JSON or TSV files. Please set load=False and manually "
                 "load the file."
             )
@@ -210,13 +209,15 @@ def load_dataset(ID: str, split: Optional[str] = None, load: Optional[bool] = Tr
         return local_path
 
     if split:
-        #this should know the ext
+        # this should know the ext
         return _handle_split(local_path, "", split)
     else:
         datasets = []
         for file in os.listdir(local_path):
             # we pass the local path and the file stem so we can match on ext
-            datasets.append(_handle_split(local_path, Path(file).suffix, Path(file).stem))
+            datasets.append(
+                _handle_split(local_path, Path(file).suffix, Path(file).stem)
+            )
         if len(datasets) == 1:
             # no need to tuple if single elem
             return datasets[0]
