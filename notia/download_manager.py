@@ -10,25 +10,24 @@ import pandas as pd
 from rich.progress import track
 import tempfile
 from functools import partial
-from zipfile import BadZipfile, ZipFile
+from zipfile import ZIP_DEFLATED, BadZipfile, ZipFile
 import shutil
 import json
-from .config import NOTIA_CACHE, Api, EXTRACTED_DATASETS_DIR
+from .config import NOTIA_CACHE, Api, EXTRACTED_DATASETS_DIR, DOWNLOADED_DATASETS_DIR
 
 
 class DownloadManager:
     """A class for managing caching & downloads from Notia.ai
-
-    All downloads will be stored at the ~/.cache/notia/datasets
-
-
     """
 
     def __init__(self) -> None:
         self._display = Display()
+        #cache_dir ~/.cache/notia/datasets 
         self.cache_dir = NOTIA_CACHE
-        self.downloads_dir = os.path.join(self.cache_dir, "downloads")
-        self.extract_dir = os.path.join(self.downloads_dir, EXTRACTED_DATASETS_DIR)
+        #downloads_dir ~/.cache/notia/datasets/downloads 
+        self.downloads_dir = os.path.join(self.cache_dir, DOWNLOADED_DATASETS_DIR)
+        #extract_dir ~/.cache/notia/datasets/extracted
+        self.extract_dir = os.path.join(self.cache_dir, EXTRACTED_DATASETS_DIR)
 
     def get_from_cache(self, slug: str, force_download=False):
         if self.cache_dir is None:
@@ -55,13 +54,16 @@ class DownloadManager:
             with temp_file_manager() as temp_file:
                 self.download_from_s3(temp_file, slug)
                 shutil.move(temp_file.name, os.path.join(self.downloads_dir, slug))
+                temp_file.close()
         except requests.exceptions.RequestException:
             # propagate upwards
             raise
 
+        #extract the file from the download dir to the extract dir
         self.extract(
             os.path.join(self.downloads_dir, slug), os.path.join(self.extract_dir, slug)
         )
+        
         shutil.move(os.path.join(self.extract_dir, slug), cache_path)
         os.remove(os.path.join(self.downloads_dir, slug))
         return cache_path
@@ -70,7 +72,7 @@ class DownloadManager:
         try:
             os.makedirs(output_path, exist_ok=True)
             with ZipFile(input_path, "r") as zip_file:
-                zip_file.extractall(output_path)
+                zip_file.extractall(path=output_path)
                 zip_file.close()
         except BadZipfile:
             # propagate upwards
@@ -182,8 +184,9 @@ def _handle_json(json_path: str):
     return json.loads(json_path)
 
 
-def _handle_split(local_path: str, split: str):
+def _handle_split(local_path: str, ext: str, split: str):
     fpath = os.path.join(local_path, split)
+    print(fpath)
     if os.path.exists(f"{fpath}.csv"):
         return _handle_csv(f"{fpath}.csv")
     elif os.path.exists(f"{fpath}.tsv"):
@@ -193,26 +196,27 @@ def _handle_split(local_path: str, split: str):
     else:
         raise ValueError(
             (
-                "Load was true, but Tabular or JSON file was not "
-                "provided. Please set load to false and manually load the file "
-                "from the provided Path. "
+                f"Load was true but {ext} was provided. Notia can automatically " 
+                "load CSV, JSON or TSV files. Please set load=False and manually "
+                "load the file."
             )
         )
 
 
-def load_dataset(slug: str, split: Optional[str] = None, load: Optional[bool] = True):
+def load_dataset(ID: str, split: Optional[str] = None, load: Optional[bool] = True):
     download_manager = DownloadManager()
-    local_path = download_manager.get_from_cache(slug)
+    local_path = download_manager.get_from_cache(ID)
     if not load:
         return local_path
 
     if split:
-        return _handle_split(local_path, split)
+        #this should know the ext
+        return _handle_split(local_path, "", split)
     else:
         datasets = []
         for file in os.listdir(local_path):
             # we pass the local path and the file stem so we can match on ext
-            datasets.append(_handle_split(local_path, Path(file).stem))
+            datasets.append(_handle_split(local_path, Path(file).suffix, Path(file).stem))
         if len(datasets) == 1:
             # no need to tuple if single elem
             return datasets[0]

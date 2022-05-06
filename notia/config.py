@@ -11,3 +11,4 @@ NOTIA_CACHE = "~/.cache/notia/datasets"
 NOTIA_CACHE = os.path.expanduser(os.getenv("NOTIA_CACHE", NOTIA_CACHE))
 
 EXTRACTED_DATASETS_DIR = "extracted"
+DOWNLOADED_DATASETS_DIR = "downloads"

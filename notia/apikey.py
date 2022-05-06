@@ -58,7 +58,7 @@ def prompt_api_key(web_url: str, api_url: str):
     api_prompt = Panel(
         (
             f"You can find your API key :key: in your browser"
-            f" [blue underline][link={web_url}/authorize]here[/link][/blue underline] "
+            f" [blue underline bold][link={web_url}/authorize]here[/link][/blue underline bold] "
         ),
         box=box.ROUNDED,
     )
