@@ -4,6 +4,7 @@ from rich.table import Table
 from rich import box
 from typing import List, Optional
 
+
 class Display:
     def __init__(self) -> None:
         self._console = Console()
@@ -50,4 +51,4 @@ class Display:
         return f"{filesize:.1f}Yi{suffix}"
 
     def _displayItemLink(self, base_url: str, name: str, slug: str) -> str:
-        return f'[link={base_url}/dataset/{slug}]{name}[/link]'
+        return f"[link={base_url}/dataset/{slug}]{name}[/link]"
