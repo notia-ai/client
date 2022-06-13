@@ -17,9 +17,9 @@ class DatasetMeta(BaseModel):
     description: str
     size: int
     created_at: datetime
-    price: int
+    price: Optional[int]
     status: StatusEnum
-    license_: str = Field(None, alias="license")
+    license_: Optional[str] = Field(None, alias="license")
 
 
 class Dataset:

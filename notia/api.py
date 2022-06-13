@@ -17,7 +17,7 @@ class API:
         self._api_key = api_key_exists(self._api_url)
         self._display = Display()
 
-    def Search(self, term=None) -> None:
+    def Search(self, term=None, web_url=None) -> None:
         try:
             response = self._RequestUrl(
                 self._api_url + "/datasets/filter", "GET", params={"search_query": term}
@@ -26,7 +26,7 @@ class API:
             dataset_list = [
                 DatasetMeta(**dataset["dataset"]) for dataset in response_results
             ]
-            self._display.datasetsAsTable(dataset_list)
+            self._display.datasetsAsTable(dataset_list, web_url)
         except requests.exceptions.RequestException:
             self._display.error(
                 (
@@ -85,9 +85,9 @@ class API:
 
 
 def search(term=None) -> None:
-    from .config import Api
+    from .config import Api, NOTIA_WEB
 
-    Api.Search(term)
+    Api.Search(term, NOTIA_WEB)
 
 
 def orders() -> None:

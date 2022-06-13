@@ -4,7 +4,6 @@ from rich.table import Table
 from rich import box
 from typing import List, Optional
 
-
 class Display:
     def __init__(self) -> None:
         self._console = Console()
@@ -21,14 +20,16 @@ class Display:
     def log_styled(self, msg_obj=None, style: Optional[str] = None) -> None:
         self._console.print(msg_obj, style=style)
 
-    def datasetsAsTable(self, datasets: List[DatasetMeta]) -> None:
+    def datasetsAsTable(self, datasets: List[DatasetMeta], web_url) -> None:
         table = Table(show_header=True, expand=True, box=box.ROUNDED)
         table.add_column("ID")
         table.add_column("Name")
         table.add_column("Size", justify="right")
         for dataset in datasets:
             table.add_row(
-                dataset.slug, dataset.name, self._displayFileSize(float(dataset.size))
+                dataset.slug,
+                self._displayItemLink(web_url, dataset.name, dataset.slug),
+                self._displayFileSize(float(dataset.size)),
             )
 
         self._console.print(table)
@@ -47,3 +48,6 @@ class Display:
                 return f"{filesize:3.1f}{unit}{suffix}"
             filesize /= 1024.0
         return f"{filesize:.1f}Yi{suffix}"
+
+    def _displayItemLink(self, base_url: str, name: str, slug: str) -> str:
+        return f'[link={base_url}/dataset/{slug}]{name}[/link]'
