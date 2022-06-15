@@ -12,11 +12,10 @@
 
 Use Notia to supercharge your models with the latest training data.
 
--   Browse over 500 datasets from top companies and institutions.
+-   Browse 100s of datasets from top companies and institutions.
 -   Directly integrates with Jupyter for easy sharing and distribution.
 -   Focus on the data science. Spend less time manually scraping and cleaning data.
--   Reproduce any experiment without any need to load up Google Drive, Dropbox
-    etc.
+-   Reproduce any experiment without any Google Drive, Dropbox etc.
 
 ## ⚡️ Quick Install
 
@@ -32,7 +31,7 @@ pip install notia
 import notia
 notia.login()
 
-notia.search("WikiQA")
+notia.search("Yelp")
 
 train_df = notia.load_dataset("XXXXX", split="train")
 ```
@@ -42,7 +41,3 @@ train_df = notia.load_dataset("XXXXX", split="train")
 Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
 
 Please make sure to update tests as appropriate.
-
-## License
-
-[MIT](https://choosealicense.com/licenses/mit/)
