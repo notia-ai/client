@@ -185,7 +185,6 @@ def _handle_json(json_path: str):
 
 def _handle_split(local_path: str, ext: str, split: str):
     fpath = os.path.join(local_path, split)
-    print(fpath)
     if os.path.exists(f"{fpath}.csv"):
         return _handle_csv(f"{fpath}.csv")
     elif os.path.exists(f"{fpath}.tsv"):

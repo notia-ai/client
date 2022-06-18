@@ -17,6 +17,14 @@ class API:
         self._api_key = api_key_exists(self._api_url)
         self._display = Display()
 
+    @property
+    def api_key(self):
+        return self._api_key
+
+    @api_key.setter
+    def api_key(self, new_key):
+        self._api_key = new_key
+
     def Search(self, term=None, web_url=None) -> None:
         try:
             response = self._RequestUrl(
@@ -90,7 +98,7 @@ def search(term=None) -> None:
     Api.Search(term, NOTIA_WEB)
 
 
-def orders() -> None:
+def my_datasets() -> None:
     from .config import Api
 
     Api.Orders()

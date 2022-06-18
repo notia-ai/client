@@ -41,4 +41,4 @@ def test_orders(base_config, mocked_responses):
         content_type="application/json",
     )
 
-    notia.orders()
+    notia.my_datasets()

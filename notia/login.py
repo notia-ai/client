@@ -27,6 +27,11 @@ class _NotiaLogin:
 
         return apikey_configured
 
+    def update_session(self, key: str) -> None:
+        from .config import Api
+
+        Api.api_key = key
+
     def is_apikey_configured(self):
         return apikey.api_key_exists(self._api_url) is not None
 
@@ -38,11 +43,13 @@ class _NotiaLogin:
                 "Consider setting the NOTIA_API_KEY environment variable"
             )
         )
-        apikey.write_netrc(self._api_url, "user", key)
+        apikey.write_key(self._api_url, key)
+        self.update_session(key)
         self._key = key
 
     def prompt_api_key(self):
         key = apikey.prompt_api_key(self._web_url, self._api_url)
+        self.update_session(key)
         self._key = key
 
 
