@@ -82,6 +82,18 @@ def api_key_exists(api_url: str):
     return key
 
 
+def write_key(api_url, key):
+    if not key:
+        raise ValueError("No API key specified.")
+
+    _, suffix = key.split("-", 1) if "-" in key else ("", key)
+
+    if len(suffix) != 40:
+        raise ValueError("API key must be 40 characters long, yours was %s" % len(key))
+
+    write_netrc(api_url, "user", key)
+
+
 def write_netrc(host: str, entity: str, key: str):
     """Add our host and key to .netrc"""
     if len(key) != 40:
