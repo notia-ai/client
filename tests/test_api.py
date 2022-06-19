@@ -35,7 +35,7 @@ def test_orders(base_config, mocked_responses):
     API_URL = base_config["API_URL"]
     mocked_responses.add(
         responses.GET,
-        f"{API_URL}/orders",
+        f"{API_URL}/api/orders",
         body="{}",
         status=200,
         content_type="application/json",
