@@ -3,6 +3,7 @@ import requests
 from typing import Optional
 from notia.apikey import api_key_exists
 from notia.models.dataset import DatasetMeta
+from notia.models import Order
 from .display import Display
 
 
@@ -47,8 +48,10 @@ class API:
 
     def Orders(self) -> None:
         try:
-            response = self._RequestUrl(f"{self._api_url}/orders", "GET")
-            self._display.ordersAsTable(response.json())
+            response = self._RequestUrl(f"{self._api_url}/api/orders", "GET")
+            order_list = [Order(**order) for order in response.json()]
+
+            self._display.ordersAsTable(order_list)
         except requests.exceptions.RequestException:
             self._display.error(
                 (

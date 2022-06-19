@@ -1,4 +1,4 @@
-from notia.models import DatasetMeta
+from notia.models import DatasetMeta, Order
 from rich.console import Console
 from rich.table import Table
 from rich import box
@@ -35,12 +35,14 @@ class Display:
 
         self._console.print(table)
 
-    def ordersAsTable(self, orders) -> None:
-        table = Table(show_header=True, header_style="bold blue")
+    def ordersAsTable(self, orders: List[Order]) -> None:
+        table = Table(show_header=True, expand=True, box=box.ROUNDED)
         table.add_column("Name")
-        table.add_column("Size")
+        table.add_column("Size", justify="right")
         for order in orders:
-            table.add_row(order["purchase_name"], order["purchase_size"])
+            table.add_row(
+                order.purchase_name, self._displayFileSize(order.purchase_size)
+            )
         self._console.print(table)
 
     def _displayFileSize(self, filesize: float, suffix="B") -> str:
