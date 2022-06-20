@@ -21,7 +21,7 @@ class Display:
     def log_styled(self, msg_obj=None, style: Optional[str] = None) -> None:
         self._console.print(msg_obj, style=style)
 
-    def datasetsAsTable(self, datasets: List[DatasetMeta], web_url) -> None:
+    def datasetsAsTable(self, datasets: List[DatasetMeta], web_url: str) -> None:
         table = Table(show_header=True, expand=True, box=box.ROUNDED)
         table.add_column("ID")
         table.add_column("Name")
@@ -35,13 +35,16 @@ class Display:
 
         self._console.print(table)
 
-    def ordersAsTable(self, orders: List[Order]) -> None:
+    def ordersAsTable(self, orders: List[Order], web_url: str) -> None:
         table = Table(show_header=True, expand=True, box=box.ROUNDED)
+        table.add_column("ID")
         table.add_column("Name")
         table.add_column("Size", justify="right")
         for order in orders:
             table.add_row(
-                order.purchase_name, self._displayFileSize(order.purchase_size)
+                order.dataset_slug,
+                self._displayItemLink(web_url, order.purchase_name, order.dataset_slug),
+                self._displayFileSize(order.purchase_size),
             )
         self._console.print(table)
 

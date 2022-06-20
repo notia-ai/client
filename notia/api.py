@@ -46,12 +46,12 @@ class API:
         except Exception as err:
             self._display.error(f"{err}")
 
-    def Orders(self) -> None:
+    def Orders(self, web_url=None) -> None:
         try:
             response = self._RequestUrl(f"{self._api_url}/api/orders", "GET")
             order_list = [Order(**order) for order in response.json()]
 
-            self._display.ordersAsTable(order_list)
+            self._display.ordersAsTable(order_list, web_url)
         except requests.exceptions.RequestException:
             self._display.error(
                 (
@@ -102,6 +102,6 @@ def search(term=None) -> None:
 
 
 def my_datasets() -> None:
-    from .config import Api
+    from .config import Api, NOTIA_WEB
 
-    Api.Orders()
+    Api.Orders(NOTIA_WEB)
