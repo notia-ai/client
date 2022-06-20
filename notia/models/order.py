@@ -14,3 +14,4 @@ class Order(BaseModel):
     purchase_description: str
     download_token: str
     seller_name: str
+    dataset_slug: str
