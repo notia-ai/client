@@ -12,7 +12,6 @@
 
 Use Notia to supercharge your models with the latest training data.
 
--   Browse 100s of datasets from top companies and institutions.
 -   Directly integrates with Jupyter for easy sharing and distribution.
 -   Focus on the data science. Spend less time manually scraping and cleaning data.
 -   Reproduce any experiment without any Google Drive, Dropbox etc.
@@ -25,16 +24,15 @@ To install notia, simply:
 pip install notia
 ```
 
-## Usage
+## Get Started
+Check out our Colab examples to get started, or browse the `examples` folder.
 
-```python
-import notia
-notia.login()
+#### Access the platform
+[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/notia-ai/client/blob/master/examples/login_demo.ipynb)
 
-notia.search("Yelp")
+#### Loading a dataset
+[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/notia-ai/client/blob/master/examples/load_dataset.ipynb)
 
-train_df = notia.load_dataset("XXXXX", split="train")
-```
 
 ## Contributing
 
