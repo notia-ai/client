@@ -1,5 +1,5 @@
 <div align="center">
-<img src="https://raw.githubusercontent.com/notia-ai/client/master/resources/imgs/notia-gh-logo.png" width=60%/><br/>  
+<img src="https://raw.githubusercontent.com/notia-ai/client/master/resources/imgs/notia-gh-logo.png" width=50%/><br/>  
 </div>
 <p align="center">
 <a href="https://pypi.org/project/notia/">
@@ -7,14 +7,8 @@
 </a> 
 </p>
 
-
----
-
-Use Notia to supercharge your models with the latest training data.
-
--   Directly integrates with Jupyter for easy sharing and distribution.
--   Focus on the data science. Spend less time manually scraping and cleaning data.
--   Reproduce any experiment without any Google Drive, Dropbox etc.
+Notia is the best way to discover your dream dataset. Tap into over 500+ Open Source & Proprietary datasets directly from your Jupyter Notebook. 
+Our mission is to provide a seamless way to train ML models and drive business decisions with rich datasets from a huge variety of sources.
 
 ## ⚡️ Quick Install
 
